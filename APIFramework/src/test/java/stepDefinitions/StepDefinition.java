@@ -32,6 +32,7 @@ public class StepDefinition extends Utils {  //inheritance - Utils is parent cla
 	ResponseSpecification specres;
 	Response response;
 	TestDataBuild data= new TestDataBuild();
+	String place_id;  // refers to same variable and it wont set to null. Will be shared among test cases
 	
 	
 	@Given("Add place payload with {string} {string} {string}")
@@ -71,13 +72,25 @@ public class StepDefinition extends Utils {  //inheritance - Utils is parent cla
 	}
 	
 	@Then("verify place_id created matches with {string} using {string}")
-	public void verify_place_id_created_matches_with_using(String string, String string2) throws IOException {
+	public void verify_place_id_created_matches_with_using(String expectedName, String resourcename) throws IOException {
 	    // Write code here that turns the phrase above into concrete actions
 		
-		String place_id =getJsonPath(response,"place_id");
+		place_id =getJsonPath(response,"place_id");
 		req= given().spec(requestSpecification()).queryParam("place_id", place_id);
+		
+		user_calls_with_http_request(resourcename,"GET"); //reuse when method to call GET as well
+		String name =getJsonPath(response,"name");
+		
+		assertEquals(expectedName,name);
 		
 	    
 	}
-
+	
+	@Given("DeletePlace payload")
+	public void deleteplace_payload() throws IOException {
+	    // Write code here that turns the phrase above into concrete actions
+	  
+     req=given().spec(requestSpecification()).body(data.deletePayload(place_id));
+     
+        }
 }
