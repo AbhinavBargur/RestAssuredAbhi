@@ -48,4 +48,10 @@ public class Utils {
 		
 	}
 
+	public String getJsonPath(Response response, String key)
+	{
+		String res = response.asString();
+		JsonPath js= new JsonPath(res);
+		return js.get(key).toString();
+	}
 }

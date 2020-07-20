@@ -10,14 +10,14 @@ public enum APIResources {
 	DeletePlaceAPI("/maps/api/place/delete/json");
 	private String resource;
 
-	APIResources(String resource) {
+	APIResources(String resource) {// need to match the class so same name and parameter.
 		this.resource= resource; // Loads /maps/api............. and assigned to global variable
 		
 	}
 			
 	public String getResource() {
 		
-		return resource; // this returns whatever is loaded in the reource
+		return resource; // this returns whatever is loaded in the resource
 		
 	}
 }
