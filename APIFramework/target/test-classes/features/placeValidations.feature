@@ -13,3 +13,10 @@ Examples:
 	|name	 	 |language|address			 |
 	|NewHouse	 |English |World cross center|
 #	|Second House|Spanish |Sea Cross		 |
+
+Scenario: Verify delete place
+
+Given DeletePlace payload
+When User calls "DeletePlaceAPI" with "POST" http request
+Then Response successful with status code 200
+And validate "status" in the response body is "OK"
