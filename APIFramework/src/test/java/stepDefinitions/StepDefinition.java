@@ -43,7 +43,7 @@ public class StepDefinition extends Utils {  //inheritance - Utils is parent cla
 	@When("User calls {string} with {string} http request")
 	public void user_calls_with_http_request(String resource, String method) {//From constructor in APIResources and AddPlaceAPI word will be stored in resource
 	  
-	APIResources resourceAPI =APIResources.valueOf(resource);
+	APIResources resourceAPI =APIResources.valueOf(resource);//value gets loaded
 	System.out.println(resourceAPI.getResource());
 	
 		specres= new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
@@ -59,22 +59,24 @@ public class StepDefinition extends Utils {  //inheritance - Utils is parent cla
 	public void response_successful_with_status_code(Integer int1) {
 	    // Write code here that turns the phrase above into concrete actions
 		
-		
+		assertEquals(response.getStatusCode(),200);
 	    
 	}
 
 	@Then("validate {string} in the response body is {string}")
 	public void validate_in_the_response_body_is(String Valuekey, String expectedValue) {
 	    // Write code here that turns the phrase above into concrete actions
-		String res = response.asString();
-		JsonPath js= new JsonPath(res);
 		
-		assertEquals(js.get(Valuekey).toString(),expectedValue);
+		assertEquals(getJsonPath(response,Valuekey).toString(),expectedValue);
 	}
 	
 	@Then("verify place_id created matches with {string} using {string}")
-	public void verify_place_id_created_matches_with_using(String string, String string2) {
+	public void verify_place_id_created_matches_with_using(String string, String string2) throws IOException {
 	    // Write code here that turns the phrase above into concrete actions
+		
+		String place_id =getJsonPath(response,"place_id");
+		req= given().spec(requestSpecification()).queryParam("place_id", place_id);
+		
 	    
 	}
 
