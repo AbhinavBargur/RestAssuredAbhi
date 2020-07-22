@@ -32,7 +32,7 @@ public class StepDefinition extends Utils {  //inheritance - Utils is parent cla
 	ResponseSpecification specres;
 	Response response;
 	TestDataBuild data= new TestDataBuild();
-	String place_id;  // refers to same variable and it wont set to null. Will be shared among test cases
+	static String place_id;  // refers to same variable and it wont set to null. Will be shared among test cases
 	
 	
 	@Given("Add place payload with {string} {string} {string}")
